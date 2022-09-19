@@ -9,9 +9,9 @@
 </head>
 <body>
 	<nav class="navbar navbar-default">
-		<divclass+'navbar-header">
+		<div class="navbar-header">
 		<button type+'button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-			<sapn class="icon-bar"> <sapn class="icon-bar"> <sapn class="icon-bar">
+			<span class="icon-bar"> <span class="icon-bar"> <span class="icon-bar">
 		</button>
 		<a class="navbar-brand" href="main.jsp">JSP 게시판 웹 사이트</a>
 		</div>
