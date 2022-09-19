@@ -16,9 +16,9 @@
 	}
 	%>
 	<nav class="navbar navbar-default">
-		<divclass+'navbar-header">
-		<button type+'button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-			<sapn class="icon-bar"> <sapn class="icon-bar"> <sapn class="icon-bar">
+		<div class="navbar-header">
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			<span class="icon-bar"> <span class="icon-bar"> <span class="icon-bar">
 		</button>
 		<a class="navbar-brand" href="main.jsp">JSP 게시판 웹 사이트</a>
 		</div>
@@ -46,7 +46,7 @@
 			<li class="dropdown"><a href=# class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">회원관리<span class="caret"></span>
 			</a>
 				<ul class="dropdown-menu">
-					<li><a href="looutAction.jsp">로그아웃</a></li>
+					<li><a href="logoutAction.jsp">로그아웃</a></li>
 				</ul></li>
 			</ui>
 			<%
