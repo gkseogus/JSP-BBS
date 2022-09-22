@@ -17,10 +17,10 @@
 	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
-		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-			<span class="icon-bar"> <span class="icon-bar"> <span class="icon-bar">
-		</button>
-		<a class="navbar-brand" href="main.jsp">JSP 게시판 웹 사이트</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="icon-bar"> <span class="icon-bar"> <span class="icon-bar">
+			</button>
+			<a class="navbar-brand" href="main.jsp">JSP 게시판 웹 사이트</a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ui class="nav navbar-nav">
@@ -46,7 +46,7 @@
 			<li class="dropdown"><a href=# class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">회원관리<span class="caret"></span>
 			</a>
 				<ul class="dropdown-menu">
-					<li><a href="looutAction.jsp">로그아웃</a></li>
+					<li><a href="logoutAction.jsp">로그아웃</a></li>
 				</ul></li>
 			</ui>
 			<%
@@ -71,8 +71,8 @@
 							<td><textarea class="form-control" placeholder="글 내용" name="bbsContent" maxlength="2048" style="height: 350px;"></textarea></td>
 						</tr>
 					</tbody>
-					<input type="submit" class="btn btn-primary pull-right" value="글쓰기"></input>
 				</table>
+				<input type="submit" class="btn btn-primary pull-right" value="글쓰기"></input>
 			</form>
 		</div>
 	</div>
