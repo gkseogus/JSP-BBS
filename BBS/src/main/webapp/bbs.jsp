@@ -15,7 +15,6 @@ a, a:hover {
 	color: #000000;
 	text-decoration: none;
 }
-
 </style>
 </head>
 <body>
@@ -86,8 +85,10 @@ a, a:hover {
 					for (int i = 0; i < list.size(); i++) {
 					%>
 					<tr>
+						<!-- 클릭한 해당 컨텐츠로 이동 -->
 						<td><%=list.get(i).getBbsID()%></td>
-						<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle()%></a></td>
+						<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt").replaceAll(">", "&gt")
+		.replaceAll("\n", "<br>")%></a></td>
 						<td><%=list.get(i).getUserID()%></td>
 						<td><%=list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시"
 		+ list.get(i).getBbsDate().substring(14, 16) + "분"%></td>
