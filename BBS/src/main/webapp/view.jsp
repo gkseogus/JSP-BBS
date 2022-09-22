@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width" , initial-scale="1">
 <link rel="stylesheet" href="css/bootstrap.css">
-<title>Insert title here</title>
+<title>JSP 게시판 웹 사이트</title>
 </head>
 <body>
 	<%
@@ -60,7 +60,7 @@
 			<li class="dropdown"><a href=# class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">회원관리<span class="caret"></span>
 			</a>
 				<ul class="dropdown-menu">
-					<li><a href="looutAction.jsp">로그아웃</a></li>
+					<li><a href="logoutAction.jsp">로그아웃</a></li>
 				</ul></li>
 			</ui>
 			<%
@@ -70,24 +70,44 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<form method="post" action="writeAction.jsp">
-				<table class="table table-striped" style="text-align: center; border: 1px solid #ddddd">
-					<thead>
-						<tr>
-							<th colspan="2" style="background-color: #eeeeee; text-align: center;">게시판 글쓰기 양식</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><input type="text" class="form-control" placeholder="글 제목" name="bbsTitle" maxlength="50"></input></td>
-						</tr>
-						<tr>
-							<td><textarea class="form-control" placeholder="글 내용" name="bbsContent" maxlength="2048" style="height: 350px;"></textarea></td>
-						</tr>
-					</tbody>
-					<input type="submit" class="btn btn-primary pull-right" value="글쓰기"></input>
-				</table>
-			</form>
+			<table class="table table-striped" style="text-align: center; border: 1px solid #ddddd">
+				<thead>
+					<tr>
+						<th colspan="3" style="background-color: #eeeeee; text-align: center;">게시판 글 보기</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="width: 20%;">글 제목</td>
+						<td colspan="2"><%=bbs.getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt").replaceAll(">", "&gt").replaceAll("\n",
+		"<br>")%></td>
+					</tr>
+					<tr>
+						<td>작성자</td>
+						<td colspan="2"><%=bbs.getUserID()%></td>
+					</tr>
+					<tr>
+						<td>작성일자</td>
+						<td colspan="2"><%=bbs.getBbsDate().substring(0, 11) + bbs.getBbsDate().substring(11, 13) + "시"
+		+ bbs.getBbsDate().substring(14, 16) + "분"%></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td colspan="2" style="min-height: 200px; text-align: left;"><%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt").replaceAll(">", "&gt").replaceAll("\n",
+		"<br>")%></td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="bbs.jsp" class="btn btn-primary">목록</a>
+			<%
+			// 만약 글의 작성자가 본인이라면 아래와 같은 태그가 노출되도록 함
+			if (userID != null && userID.equals(bbs.getUserID())) {
+			%>
+			<a href="update.jsp?bbsID=<%=bbsID%>" class="btn btn-primary">수정</a> 
+			<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-primary">삭제</a>
+			<%
+			}
+			%>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
