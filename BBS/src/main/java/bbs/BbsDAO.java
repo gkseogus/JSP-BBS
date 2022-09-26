@@ -7,12 +7,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class BbsDAO {
-	// ctrl + shift + o 로 외부 라이브러리를 한번에 불러올 수 있다.
+	// _ctrl + shift + o 로 외부 라이브러리를 한번에 불러올 수 있다.
 	private Connection conn;
-	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	// mariadb 접속
+	// _mariadb 접속
 	public BbsDAO() {
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/userDB";
@@ -102,7 +101,7 @@ public class BbsDAO {
 		return list;
 	}
 
-	// 페이징 처리 (ex -> 게시글 10개 = 페이지 1개, 게시글 11개 = 페이지 2개 ...)
+	// 페이징 처리 (_ex -> 게시글 10개 = 페이지 1개, 게시글 11개 = 페이지 2개 ...)
 	public boolean nextPage(int pageNumber) {
 		String SQL = "SELECT * FROM bbs WHERE bbsID < ? AND bbsAvailable = 1";
 		try {
