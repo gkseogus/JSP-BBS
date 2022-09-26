@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width" , initial-scale="1">
+<meta name="viewport" content="width=device-width. initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
 <title>Insert title here</title>
@@ -19,7 +19,7 @@
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				<span class="icon-bar"> <span class="icon-bar"> <span class="icon-bar">
+				<span class="icon-bar" ></span>  <span class="icon-bar" > </span> <span class="icon-bar"></span> 
 			</button>
 			<a class="navbar-brand" href="main.jsp">JSP 게시판 웹 사이트</a>
 		</div>
@@ -27,6 +27,7 @@
 			<ui class="nav navbar-nav">
 			<li class="active"><a href="main.jsp">메인</a></li>
 			<li><a href="bbs.jsp">게시판</a></li>
+			<li><a href="Anony/indexAnony.jsp">실시간 익명 채팅방</a></li>
 			</ui>
 			<%
 			// 로그인 되어있지 않으면 아래 요소들이 보여진다.
@@ -82,8 +83,7 @@
 					<img src="images/3.jpg">
 				</div>
 			</div>
-			<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> 
-			<a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
