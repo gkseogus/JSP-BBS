@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class UserDAO {
-	// ctrl + shift + o 로 외부 라이브러리를 한번에 불러올 수 있다.
+	// _ctrl + shift + o 로 외부 라이브러리를 한번에 불러올 수 있다.
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	// mariadb 접속
+	// _mariadb 접속
 	public UserDAO() {
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/userDB";
@@ -69,10 +69,5 @@ public class UserDAO {
 		}
 		// 데이터 베이스 오류
 		return -1;
-	}
-
-	private PreparedStatement setString(int i, String userID) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
