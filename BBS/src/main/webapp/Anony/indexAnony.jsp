@@ -7,6 +7,78 @@
 <link rel="stylesheet" href="../css/bootstrap.css">
 <link rel="stylesheet" href="../css/customAnony.css">
 <title>JSP AJAX 실시간 익명 채팅 사이트</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	function submitFunction() {
+		// 사용자가 입력한 이름, 내용 값을 담는다.
+		var chatName = $("#chatName").val();
+		var chatContent = $("#chatContent").val();
+
+		// ajax로 서버와 통신
+		$.ajax({
+			type : "POST",
+			url : "../ChatSubmitServlet",
+			data : {
+				chatName : chatName,
+				chatContent : chatContent
+			},
+
+			// 데이터 전송 여부 확인
+			success : function(result) {
+				if (result == 1) {
+					alert('성공');
+				} else if (result == 0) {
+					alert('실패');
+				} else {
+					alert('db오류');
+				}
+			}
+		});
+
+		// 전송 창을 비워두기 위함
+		$('#chatContent').val('');
+	}
+
+	// 파싱한 데이터를 배열로 출력하는 함수
+	function chatListFunction(type) {
+		// ajax로 서버와 통신
+		$.ajax({
+			type : "POST",
+			url : "../ChatListServlet",
+			data : {
+				listType : type,
+			},
+
+			success : function(data) {
+				var parsed = JSON.parse(data);
+				var result = parsed.result;
+				for (var i = 0; i < result.length; i++) {
+					addChat(result[i][0].value, result[i][1].value,
+							result[i][2].value);
+				}
+			}
+		});
+	}
+	
+	// 채팅 노출 시키는 함수
+	function addChat(chatName, chatContent, chatTime) {
+		$('#chatList')
+				.append(
+						'<div class="row">'
+								+ '	<div class="col-lg-12">'
+								+ '		<div class="media">'
+								+ '<a class="pull-left" href="#"> '
+								+ '<img class="media-object img-circle" src="../images/vForVendetta.png">'
+								+ '	</a>' + '		<div class="media-body">'
+								+ '				<h4 class="media-heading">' + chatName
+								+ '<span class="small pull-right">' + chatTime
+								+ '</span>' + '	</h4>' + '</div>' + '	<p>'
+								+ chatContent + '</p>' + '	</div>' + '	</div>'
+								+ '	</div>' + '<hr>'
+
+				);
+	}
+</script>
 </head>
 <body>
 	<div class="container">
@@ -17,52 +89,17 @@
 						<div class="portlet-heading">
 							<div class="portlet-title">
 								<h4>
-									<i class="fa fa-circle text-green"></i>실시간 채팅방
+									<i class="fa fa-circle text-green"></i>실시간 익명 채팅방
 								</h4>
 							</div>
 							<div class="clearfix"></div>
 						</div>
 						<div id="chat" class="panel-collapse collapse in">
-							<div class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 300px;">
-								<div class="row">
-									<div class="col-lg-12">
-										<p class="text-center text-muted small">20xx년 xx월 xx일</p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="media">
-											<a class="pull-left" href="#"> <img class="media-object img-circle" src="../images/vForVendetta.png">
-											</a>
-											<div class="media-body">
-												<h4 class="media-heading">
-													홍길동 <span class="small pull-right">오전 12:23</span>
-												</h4>
-											</div>
-											<p>안녕하세요</p>
-										</div>
-									</div>
-								</div>
-								<hr>
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="media">
-											<a class="pull-left" href="#"> <img class="media-object img-circle" src="../images/vForVendetta.png">
-											</a>
-											<div class="media-body">
-												<h4 class="media-heading">
-													친구2 <span class="small pull-right">오후 12:28</span>
-												</h4>
-											</div>
-											<p>안녕하세요</p>
-										</div>
-									</div>
-								</div>
-							</div>
+							<div id="chatList" class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 300px;"></div>
 							<div class="portlet-footer">
 								<div class="row">
 									<div class="form-group col-xs-4">
-										<input style="height: 40px;" type="text" id="chatName" class="form-control" placeholder="이름" maxlength="20">
+										<input style="height: 40px;" type="text" id="chatName" class="form-control" placeholder="이름" maxlength="8">
 									</div>
 								</div>
 								<div class="row" style="height: 90px">
@@ -70,7 +107,7 @@
 										<textarea style="height: 80px;" id="chatContent" class="form-control" placeholder="메시지를 입력하세요." maxlength="100"></textarea>
 									</div>
 									<div class="form-group col-xs-2">
-										<button type="button" class="btn btn-default pull-right" onclick="sumbitFunction();">전송</button>
+										<button type="button" class="btn btn-default pull-right" onclick="submitFunction();">전송</button>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -81,5 +118,6 @@
 			</div>
 		</div>
 	</div>
+	<button type="button" class="btn btn-default pull-right" onclick="chatListFunction('today');">추가</button>
 </body>
 </html>
