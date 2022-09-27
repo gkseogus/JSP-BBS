@@ -9,13 +9,15 @@ import java.util.ArrayList;
 public class ChatDAO {
 
 	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
 
 	public ChatDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:3306/anonymousdb";
+			String dbURL = "jdbc:mysql://localhost:3306/ANONYMOUSCHAT";
 			String dbID = "root";
-			String dbPassword = "gkseogus";
-			Class.forName("com.mysql.jdbc.Driver");
+			String dbPassword = "gkseogus!";
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -25,9 +27,7 @@ public class ChatDAO {
 	// 현재 모든 채팅 리스트를 불러오는 함수
 	public ArrayList<Chat> getChatList(String nowTime) {
 		ArrayList<Chat> chatList = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String SQL = "SELECT * FROM CHAT WHERE chatTitme > ? ORDER BY chatTime";
+		String SQL = "SELECT * FROM CHAT WHERE chatTime > ? ORDER BY chatTime";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, nowTime);
@@ -36,8 +36,16 @@ public class ChatDAO {
 			while (rs.next()) {
 				Chat chat = new Chat();
 				chat.setChatName(rs.getString("chatName"));
-				chat.setChatContent(rs.getString("chatContent"));
-				chat.setChatTime(rs.getString("chatTime"));
+				chat.setChatContent(rs.getString("chatContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
+						.replaceAll(">", "&gt;").replaceAll("" + "\n", "<br>"));
+				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
+				String timeType = "오전";
+				if (Integer.parseInt(rs.getString("chatTime").substring(11, 13)) >= 12) {
+					timeType = "오후";
+					chatTime -= 12;
+				}
+				chat.setChatTime(rs.getString("chatTime").substring(0, 11) + " " + timeType + " " + chatTime + ":"
+						+ rs.getString("chatTime").substring(14, 16) + "");
 				chatList.add(chat);
 			}
 		} catch (Exception e) {
@@ -57,14 +65,11 @@ public class ChatDAO {
 
 	// 사용자가 메시지를 입력하도록 하는 함수
 	public int submit(String chatName, String chatContent) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		String SQL = "INSERT INTO CHAT VALUES (?, ?, now())";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, chatName);
 			pstmt.setString(2, chatContent);
-			rs = pstmt.executeQuery();
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
