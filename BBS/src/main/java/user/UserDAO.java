@@ -11,7 +11,7 @@ public class UserDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	// _mariadb 접속
+	// _mariadb 접속 함수
 	public UserDAO() {
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/userDB";
@@ -53,7 +53,7 @@ public class UserDAO {
 		return -2;
 	}
 
-	// 회원가입 기능
+	// 회원가입 기능 함수
 	public int join(User user) {
 		String SQL = "INSERT INTO USER VALUES (?,?,?,?,?)";
 		try {

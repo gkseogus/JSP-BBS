@@ -11,7 +11,7 @@ public class BbsDAO {
 	private Connection conn;
 	private ResultSet rs;
 
-	// _mariadb 접속
+	// _mariadb 접속 함수
 	public BbsDAO() {
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/userDB";
