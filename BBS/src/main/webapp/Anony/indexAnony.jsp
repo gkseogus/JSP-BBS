@@ -9,6 +9,7 @@
 <title>JSP AJAX 실시간 익명 채팅 사이트</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+	var lastID = 0;
 	function submitFunction() {
 		// 사용자가 입력한 이름, 내용 값을 담는다.
 		var chatName = $("#chatName").val();
@@ -20,7 +21,7 @@
 			url : "../ChatSubmitServlet",
 			data : {
 				chatName : chatName,
-				chatContent : chatContent
+				chatContent : chatContent,
 			},
 
 			// 데이터 전송 여부 확인
@@ -50,16 +51,19 @@
 			},
 
 			success : function(data) {
+				if (data == "")
+					return;
 				var parsed = JSON.parse(data);
 				var result = parsed.result;
 				for (var i = 0; i < result.length; i++) {
 					addChat(result[i][0].value, result[i][1].value,
 							result[i][2].value);
 				}
+				lastID = Number(parsed.last);
 			}
 		});
 	}
-	
+
 	// 채팅 노출 시키는 함수
 	function addChat(chatName, chatContent, chatTime) {
 		$('#chatList')
@@ -75,8 +79,15 @@
 								+ '</span>' + '	</h4>' + '</div>' + '	<p>'
 								+ chatContent + '</p>' + '	</div>' + '	</div>'
 								+ '	</div>' + '<hr>'
-
+					$('#chatList').scrollTop($('#chatList')[0].scrollHeight);
 				);
+	}
+
+	/* 새로운 메시지를 가져오는 함수 */
+	function getInfiniteChat() {
+		setInterval(function() {
+			chatListFunction(lastID);
+		}, 1000);
 	}
 </script>
 </head>
@@ -95,7 +106,7 @@
 							<div class="clearfix"></div>
 						</div>
 						<div id="chat" class="panel-collapse collapse in">
-							<div id="chatList" class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 300px;"></div>
+							<div id="chatList" class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 600px;"></div>
 							<div class="portlet-footer">
 								<div class="row">
 									<div class="form-group col-xs-4">
@@ -118,6 +129,12 @@
 			</div>
 		</div>
 	</div>
-	<button type="button" class="btn btn-default pull-right" onclick="chatListFunction('today');">추가</button>
+	<!-- 페이지 로딩 시 함수 실행 -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			chatListFunction('ten');
+			getInfiniteChat();
+		});
+	</script>
 </body>
 </html>
