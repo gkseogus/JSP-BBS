@@ -6,28 +6,25 @@
 <meta name="viewport" content="width=device-width. initial-scale=1">
 <link rel="stylesheet" href="../css/bootstrap.css">
 <link rel="stylesheet" href="../css/customAnony.css">
-<title>JSP AJAX 실시간 익명 채팅 사이트</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<title>JSP AJAX 실시간 익명 채팅 사이트</title>
 <script type="text/javascript">
 	var lastID = 0;
 	function submitFunction() {
 		// 사용자가 입력한 이름, 내용 값을 담는다.
 		var chatName = $("#chatName").val();
 		var chatContent = $("#chatContent").val();
-
 		// ajax로 서버와 통신
 		$.ajax({
 			type : "POST",
 			url : "../ChatSubmitServlet",
 			data : {
-				chatName : chatName,
-				chatContent : chatContent,
+				chatName : encodeURIComponent(chatName),
+				chatContent : encodeURIComponent(chatContent)
 			},
-
 			// 데이터 전송 여부 확인
 			success : function(result) {
 				if (result == 1) {
-					alert('성공');
 				} else if (result == 0) {
 					alert('실패');
 				} else {
@@ -35,11 +32,9 @@
 				}
 			}
 		});
-
 		// 전송 창을 비워두기 위함
 		$('#chatContent').val('');
 	}
-
 	// 파싱한 데이터를 배열로 출력하는 함수
 	function chatListFunction(type) {
 		// ajax로 서버와 통신
@@ -49,10 +44,7 @@
 			data : {
 				listType : type,
 			},
-
 			success : function(data) {
-				if (data == "")
-					return;
 				var parsed = JSON.parse(data);
 				var result = parsed.result;
 				for (var i = 0; i < result.length; i++) {
@@ -78,14 +70,12 @@
 								+ '<span class="small pull-right">' + chatTime
 								+ '</span>' + '	</h4>' + '</div>' + '	<p>'
 								+ chatContent + '</p>' + '	</div>' + '	</div>'
-								+ '	</div>' + '<hr>'
-					$('#chatList').scrollTop($('#chatList')[0].scrollHeight);
-				);
+								+ '	</div>' + '<hr>');
 	}
-
-	/* 새로운 메시지를 가져오는 함수 */
+	
+	// 채팅을 1초마다 불러오는 함수
 	function getInfiniteChat() {
-		setInterval(function() {
+		setInterval(() => {
 			chatListFunction(lastID);
 		}, 1000);
 	}
@@ -106,7 +96,7 @@
 							<div class="clearfix"></div>
 						</div>
 						<div id="chat" class="panel-collapse collapse in">
-							<div id="chatList" class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 600px;"></div>
+							<div id="chatList" class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 300px;"></div>
 							<div class="portlet-footer">
 								<div class="row">
 									<div class="form-group col-xs-4">
@@ -129,7 +119,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 페이지 로딩 시 함수 실행 -->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			chatListFunction('ten');
