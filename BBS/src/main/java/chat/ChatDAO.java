@@ -106,7 +106,7 @@ public class ChatDAO {
 	}
 
 	// 특정한 id보다 큰 id를 모두 추출하는 함수
-	public ArrayList<Chat> getChatListByRecent(String chatID) {
+	public ArrayList<Chat> getChatListByRecentID(String chatID) {
 		ArrayList<Chat> chatList = null;
 		String SQL = "SELECT * FROM CHAT WHERE chatID > ? ORDE BY chatTime";
 		try {
