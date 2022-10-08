@@ -4,3 +4,4 @@ jsp 연습
 익명채팅 기능
 mysql  연동
 java, jsp 사용
+페이지네이션, 
